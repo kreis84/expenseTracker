@@ -1,0 +1,14 @@
+<div class="card container">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <label class='col-4'>Login <input type="text" id='login' class='form-control' [(ngModel)]="login"></label>
+      <label class='col-4 offset-5px'>Password <input type="password" id='password' class='form-control' [(ngModel)]="password"></label>
+      <button type="button" style='height: 40px;top: 8px;' class="btn btn-primary col-4" (click)='onLoginClick()'>LOG IN</button>
+    </div>
+    <div class="row justify-content-end">
+        <a routerLink="/newUser" routerLinkActive="active">
+          <button type="button" class="btn btn-link">Register new user</button>
+        </a>
+    </div>
+  </div>
+</div>

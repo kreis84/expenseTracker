@@ -1,0 +1,15 @@
+<div class="card container">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <label class='col-3'>Name<input type="text" id='name' class='form-control' [(ngModel)]="name"></label>
+      <label class='col-3 '>Login <input type="text" id='login' class='form-control' [(ngModel)]="login"></label>
+      <label class='col-3 '>Password <input type="password" id='password' class='form-control' [(ngModel)]="password"></label>
+      <button type="button" style='height: 40px; top: 8px;' class="btn btn-primary col-3" (click)='onRegisterClick()'>Register</button>
+    </div>
+    <div class="row justify-content-end">
+      <a routerLink="/login" routerLinkActive="active">
+        <button type="button" class="btn btn-link">Back to login</button>
+      </a>
+  </div>
+  </div>
+</div>

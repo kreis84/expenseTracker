@@ -1,0 +1,19 @@
+<div class="card container">
+  <div class="card-body">
+      <form [formGroup]="formGroup">
+          <label> Category
+            <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{selectedCategory}}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button class="dropdown-item" type="button" *ngFor='let category of categories'
+                  (click)='onCategorySelect(category)'>{{category.name}}</button>
+              </div>
+            </div>
+          </label>
+        </form>   
+  </div>
+</div>
+
