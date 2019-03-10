@@ -13,12 +13,15 @@ import { AddExpenseComponent } from './addExpense/addExpense.component';
 import { LogingService } from './loging.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HistoryComponent } from './history/history.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChartsModule } from 'ng2-charts';
+import { HistoryListComponent } from './history-list/history-list.component';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent},
-  { path: 'newUser', component: NewUserComponent},
-  { path: 'addExpense', component: AddExpenseComponent},
-  { path: 'showHistory', component: HistoryComponent}
+  { path: 'login', component: LoginComponent },
+  { path: 'newUser', component: NewUserComponent },
+  { path: 'addExpense', component: AddExpenseComponent },
+  { path: 'showHistory', component: HistoryComponent }
 ]
 
 @NgModule({
@@ -27,9 +30,11 @@ const appRoutes: Routes = [
     LoginComponent,
     NewUserComponent,
     AddExpenseComponent,
-    HistoryComponent    
+    HistoryComponent,
+    HistoryListComponent
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     BrowserModule,
@@ -37,7 +42,7 @@ const appRoutes: Routes = [
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
-
+    ChartsModule
   ],
   providers: [ServicesService, LoaderService, LogingService],
   bootstrap: [AppComponent]

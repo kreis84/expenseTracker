@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { filterQueryId } from '@angular/core/src/view/util';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ServicesService {
@@ -18,7 +19,7 @@ export class ServicesService {
     return this.http.get(`https://expensestracker-fcc2.restdb.io/rest/expens`, this.httpOptions);
   }
 
-  public getExpensByUserId(userId): any {
+  public getExpensByUserId(userId): Observable<any> {
     return this.http.get(`https://expensestracker-fcc2.restdb.io/rest/expens`, this.httpOptions)
       .pipe(map((expens: any[]) => expens.filter((ex) => ex.userId === userId)));
   }
@@ -27,7 +28,7 @@ export class ServicesService {
     return this.http.get(`https://expensestracker-fcc2.restdb.io/rest/categories`, this.httpOptions);
   }
 
-  public getCategoriesByUser(userId): any {
+  public getCategoriesByUser(userId): Observable<any> {
     return this.http.get(`https://expensestracker-fcc2.restdb.io/rest/categories`, this.httpOptions)
       .pipe(map((cats: any[]) => cats.filter((cat) => cat.userId === userId || cat.userId === '1')));
   }

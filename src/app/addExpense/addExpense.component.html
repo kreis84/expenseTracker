@@ -8,7 +8,7 @@
             {{selectedCategory}}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button class="dropdown-item" type="button" *ngFor='let category of categories'
+            <button class="dropdown-item margin-left-10" type="button" *ngFor='let category of categories'
               (click)='onCategorySelect(category)'>{{category.name}}</button>
           </div>
         </div>
@@ -18,14 +18,13 @@
         title="Create new category" (click)='showNewCateSection = !showNewCateSection'>
         <i class="fas fa-plus-square"></i>
       </button>
-      <label class="down5px">Description<input type="text" class='form-control' formControlName="description"></label>
-      <label class="down5px">Value<input type="number" class='form-control' formControlName="value"></label>
-      <button class="btn btn-primary" type="button" (click)='onAddNewExpense()'
-        [attr.disabled]='this.formGroup.valid ? null : false'>Save new
-        category</button>
+      <label class="down5px margin-left-10">Description<input type="text" class='form-control' formControlName="description"></label>
+      <label class="down5px margin-left-10">Value<input type="number" class='form-control' formControlName="value"></label>
+      <button class="btn btn-primary margin-left-10" type="button" (click)='onAddNewExpense()'
+        [attr.disabled]='this.formGroup.valid ? null : false'>Save new expense</button>
       <div *ngIf='showNewCateSection' class='modal'>
         <div class='modalContent'>
-          <label>Category name<input type="text" class='form-control' [(ngModel)]="newCategoryName"></label>
+          <label>Category name<input type="text" class='form-control' formControlName='newCategoryformControl'></label>
           <button class="btn btn-primary" type="button" (click)='onAddNewCategory()'>SAVE</button>
           <a><button type="button" class="btn btn-link" (click)='showNewCateSection=false'
               style='clear: both'>Back</button></a>

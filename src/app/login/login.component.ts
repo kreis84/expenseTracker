@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
               private spinner: LoaderService) { }
 
   ngOnInit() {
-    this.name = 'quest';
-    this.login = 'quest';
-    this.password = 'quest123!';
+    this.name = 'testQuest';
+    this.login = 'maro';
+    this.password = 'maro92';
   }
 
   public onLoginClick(): void {
@@ -40,4 +40,13 @@ export class LoginComponent implements OnInit {
       }
     })
   }
+
+  public chartHovered(event): void{
+    console.log(event);
+  }
+
+  public chartClicked(event): void{
+    console.log(event);
+  }
+
 }

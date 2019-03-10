@@ -1,19 +1,60 @@
 <div class="card container">
-  <div class="card-body">
-      <form [formGroup]="formGroup">
-          <label> Category
-            <div class="dropdown">
-              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                {{selectedCategory}}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <button class="dropdown-item" type="button" *ngFor='let category of categories'
-                  (click)='onCategorySelect(category)'>{{category.name}}</button>
+  <div class="card-body container">
+    <div class="row">
+      <form [formGroup]="formGroup" class="col-md-3 col-sm-4">
+        <div class="card cardCategories">
+          <div class="card-body">
+            <label>
+              <h6>Categories</h6>
+              <div class="form-check" *ngFor='let category of categories'>
+                <label class='checkboxLabel'>
+                  <input class="form-check-input" type="checkbox" (change)='chanegeCategory($event)'
+                    [id]="category.name">
+                  {{category.name}}
+                </label>
               </div>
-            </div>
-          </label>
-        </form>   
+            </label>
+          </div>
+        </div>
+        <label>
+          <div>Start date</div>
+          <input type="text" style="width: 100px" formControlName='startDate' ngbDatepicker #startDat="ngbDatepicker"
+            onkeydown="return false" />
+          <button class="btn btn-primary btn-sm" style="top: -2px; position: relative;" (click)="startDat.toggle()"><i
+              class="far fa-calendar-alt"></i></button>
+        </label>
+        <label>
+          <div>End date</div>
+          <input type="text" style="width: 100px" formControlName='endDate' ngbDatepicker #EndDat="ngbDatepicker"
+            onkeydown="return false" />
+          <button class="btn btn-primary btn-sm" style="top: -2px; position: relative;" (click)="EndDat.toggle()"><i
+              class="far fa-calendar-alt"></i></button>
+        </label>
+        <button class="btn btn-primary" style='width: 130px' (click)='onShowHistoryClick()'>Show history</button>
+      </form>
+      <app-history-list class='col-md-2 col-sm-3'>
+
+      </app-history-list>
+      <div id="charts" class='col-md-7 col-sm-5' *ngIf='showHistory'>
+        <label> Chart type: 
+        </label>
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{selectedChartType}}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <button class="dropdown-item margin-left-10" type="button" *ngFor='let chartType of chartsTypes'
+              (click)='onChartTypeSelect(chartType)'>{{chartType}}</button>
+          </div>
+        </div>
+        <div>
+          <div style="display: block">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+              [legend]="barChartLegend" [chartType]="selectedChartType" (chartHover)="chartHovered($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-

@@ -1,0 +1,26 @@
+.cardCategories{
+    width: 130px;
+    word-break: break-all;
+    overflow: hidden;
+
+    .card-body{
+        padding: 5px;
+
+        .checkboxLabel{
+            margin-bottom: 0px;
+            cursor: pointer;
+        }
+    }
+}
+
+#charts{
+    label{
+        float:left;
+        top: 7px;
+        position: relative;
+    }
+    .dropdown{
+        float: left;
+    }
+}
+

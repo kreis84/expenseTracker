@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServicesService } from '../services.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../loader.service';
 import { LogingService } from '../loging.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { Observable, combineLatest } from 'rxjs';
+import * as moment from 'moment';
+import { BaseChartDirective } from 'ng2-charts';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -13,30 +15,123 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class HistoryComponent implements OnInit {
   formGroup = new FormGroup({
     startDate: new FormControl(''),
-    endDate: new FormControl(''),
-    category: new FormControl('')
+    endDate: new FormControl('')
   });
   categories: any[];
-  selectedCategory = 'Select category';
+  expenses: any[];
+  selectedCategories: any[] = [];
+  selectedExpenses: any[];
 
-  constructor(    private services: ServicesService,
-    private router: Router,
-    private loging: LogingService,
-    private spinner: LoaderService) { 
-      this.spinner.turnOn();
-      const user = this.loging.user;
-      this.services.getCategoriesByUser(user._id).subscribe((categories: any[]) => {
+  showHistory: boolean = false;
+  chartsTypes = ['bar','line','doughnut'];
+  selectedChartType = 'bar';
+  barChartLegend: boolean = true;
+  barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  barChartData:any[] = [
+    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+  ];
+
+  constructor(private services: ServicesService,
+              private router: Router,
+              private loging: LogingService,
+              private spinner: LoaderService) {
+    this.spinner.turnOn();
+    const user = this.loging.user;
+    combineLatest(this.services.getCategoriesByUser(user._id), this.services.getExpensByUserId(user._id))
+      .subscribe(([categories, expenses]: [any[], any[]]) => {
+        this.expenses = expenses;
         this.categories = categories;
         this.spinner.turnOff();
       });
-  
-    }
+  }
 
   ngOnInit() {
   }
-
-  public onCategorySelect(category): void{
-    this.selectedCategory = category;
+  
+  public prepareDataForChart(expenses: any[]): void{
+    const startDate = this.makeMomentDate(this.formGroup.get('startDate').value);
+    const endDate = this.makeMomentDate(this.formGroup.get('endDate').value);
+    const selectedCategoriesObject = this.selectedCategories
+      .map(catName => this.categories.find((cat) => cat.name === catName));
+    const days = endDate.diff(startDate, 'days') + 1;
+    this.barChartLabels = this.getDatesListAsString(startDate, endDate);
+    this.barChartData = selectedCategoriesObject.map((category) => {
+      const expensesForCategory = expenses.filter(expens => expens.categoryId === category._id);
+      const dataForDates = this.barChartLabels.map((dateAsString) => {
+        const currentDate = moment(dateAsString, 'DD.MM.YYYY');
+        let expensesForCurrentDate = expensesForCategory.filter((expense) => {
+          return moment(expense.date).isSame(currentDate, 'days');
+        });
+        expensesForCurrentDate = expensesForCurrentDate.reduce((acc, item) => acc + item.value ,0);
+        return expensesForCurrentDate;
+      })
+       return {
+        data: dataForDates,
+        label: category.name
+      }
+    });
   }
 
+  public onShowHistoryClick(): void {
+    this.showHistory = false;
+    const filteredExpenses = this.filterExpensesBySearchCriteria();
+    this.prepareDataForChart(filteredExpenses);
+    setTimeout(() => {
+      this.showHistory = true;
+    }, 0);
+  }
+
+  public filterExpensesBySearchCriteria(): any[]{
+    const categoriesIds = this.categories
+      .filter((cat) => this.selectedCategories.includes(cat.name))
+      .map((cat) => cat._id);
+    let filteredExpenses = this.expenses.filter((expense) =>categoriesIds.includes(expense.categoryId));
+    if(this.formGroup.get('startDate').value !== ''){
+      const earliestDate = this.makeMomentDate(this.formGroup.get('startDate').value);
+      filteredExpenses = filteredExpenses.filter((expens) => moment(expens.date).isSameOrAfter(earliestDate));
+    }
+    if(this.formGroup.get('endDate').value !== ''){
+      const latestDate = this.makeMomentDate(this.formGroup.get('endDate').value);
+      latestDate.hour(24);
+      filteredExpenses = filteredExpenses.filter((expens) => {
+        return moment(expens.date).isSameOrBefore(latestDate);
+      });
+    }
+    return filteredExpenses;
+  }
+
+  public makeMomentDate(date: any): any {
+    return moment(`${date.day}.${date.month}.${date.year}`, 'DD.MM.YYYY');
+  }
+
+  public chanegeCategory($event): void {
+    const id = $event.target.id;
+    const checked = $event.target.checked;
+    if (checked) {
+      this.selectedCategories.push(id);
+    } else {
+      this.selectedCategories = this.selectedCategories.filter((it) => it !== id);
+    }
+  }
+
+  public getDatesListAsString(start, end) {
+    let arr = [];
+    const dt = new Date(start);
+  
+    while (dt <= end) {
+      arr.push(new Date(dt));
+      dt.setDate(dt.getDate() + 1);
+    }
+    arr = arr.map((date) => moment(date).format('DD.MM.YYYY'));
+    return arr;
+  }
+
+  public onChartTypeSelect(type): void {
+    this.selectedChartType = type;
+  }
 }

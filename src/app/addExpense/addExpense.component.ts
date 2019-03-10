@@ -25,8 +25,11 @@ export class AddExpenseComponent {
   formGroup = new FormGroup ({
     selectedCategory: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    value: new FormControl('', [Validators.required])
+    value: new FormControl('', [Validators.required]),
+    newCategoryformControl: new FormControl('')
   })
+
+  newCategoryformControl = new FormControl('');
 
   constructor(private cd: ChangeDetectorRef,
     private services: ServicesService,
@@ -48,7 +51,7 @@ export class AddExpenseComponent {
 
   public onAddNewCategory(): void {
     const userId = this.loging.user._id;
-    const newCategory = {name: this.newCategoryName, userId: userId};
+    const newCategory = {name: this.formGroup.get('newCategoryformControl').value, userId: userId};
     this.spinner.turnOn();
     this.services.addNewCategory(newCategory).subscribe((response) => {
       this.spinner.turnOff();
