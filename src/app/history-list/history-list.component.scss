@@ -1,0 +1,52 @@
+.hed{
+    border: 1px solid #dcdcdc;
+    padding-top: 5px;
+    margin: auto;
+    text-align: -webkit-center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    margin-top: 5px;
+    margin-bottom: 1px;
+    
+    h6{
+        padding-left: 10px;
+    }
+}
+.paddingRight10px{
+    padding-right: 10px;
+}
+
+.floatLeft{
+    float: left;
+}
+
+.floatRight{
+    float: right;
+}
+.fontWeight600{
+    font-weight: 600;
+}
+.fontWeight800{
+    font-weight: 800;
+}
+
+hr{
+    margin: 0;
+}
+.detailedItem{
+    font-size: 13px;
+    border: 1px solid #dcdcdc;
+    border-radius: 0.25rem;
+    padding: 0 10px;
+    margin-bottom: 1px;
+}
+.littleDesc{
+    font-size: 10px;
+    top: 5px;
+    position: relative;
+}
+
+.test{
+    position: absolute;
+    left: 150px
+}

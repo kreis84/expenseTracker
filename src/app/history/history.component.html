@@ -1,7 +1,7 @@
 <div class="card container">
   <div class="card-body container">
     <div class="row">
-      <form [formGroup]="formGroup" class="col-md-3 col-sm-4">
+      <form [formGroup]="formGroup" class="col-md-2 col-sm-3">
         <div class="card cardCategories">
           <div class="card-body">
             <label>
@@ -32,26 +32,35 @@
         </label>
         <button class="btn btn-primary" style='width: 130px' (click)='onShowHistoryClick()'>Show history</button>
       </form>
-      <app-history-list class='col-md-2 col-sm-3'>
 
-      </app-history-list>
+      <div id='historyList' *ngIf='showHistory' class='col-md-3 col-sm-4'>
+        <app-history-list *ngIf='showHistory' [categories]='categories' [selectedCategoriesNames]='selectedCategories'
+          [expenses]='selectedExpenses'>
+        </app-history-list>
+      </div>
+
       <div id="charts" class='col-md-7 col-sm-5' *ngIf='showHistory'>
-        <label> Chart type: 
-        </label>
-        <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{selectedChartType}}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button class="dropdown-item margin-left-10" type="button" *ngFor='let chartType of chartsTypes'
-              (click)='onChartTypeSelect(chartType)'>{{chartType}}</button>
-          </div>
-        </div>
-        <div>
-          <div style="display: block">
-            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-              [legend]="barChartLegend" [chartType]="selectedChartType" (chartHover)="chartHovered($event)"></canvas>
+        <div class="card container">
+          <div class="card-body container">
+            <label> Chart type:
+            </label>
+            <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {{selectedChartType}}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button class="dropdown-item margin-left-10" type="button" *ngFor='let chartType of chartsTypes'
+                  (click)='onChartTypeSelect(chartType)'>{{chartType}}</button>
+              </div>
+            </div>
+            <div>
+              <div style="display: block">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                  [legend]="barChartLegend" [chartType]="selectedChartType"
+                  (chartHover)="chartHovered($event)"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,3 +1,38 @@
-<p>
-  history-list works!
-</p>
+<div *ngFor='let category of renderObject'>
+  <span data-toggle="collapse" [attr.data-target]="'#hist' + category.catName" aria-expanded="false"
+    aria-controls="collapseExample">
+    <div class="hed">
+      <h6 class='floatLeft'>{{category.catName}}</h6>
+      <div class='floatRight paddingRight10px test'>
+        <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
+        <div class="floatLeft fontWeight600"> {{getCategorySum(category.dates)}}</div>
+      </div>
+      <div style="clear: both"></div>
+    </div>
+  </span>
+  <div class="collapse" [id]="'hist'+category.catName">
+    <div class="detailedItem" *ngFor='let date of category.dates'>
+      <div class="floatLeft">
+        <div class='littleDesc floatLeft fontWeight800'>Date: &nbsp;</div>
+        <div class="fontWeight600 floatLeft">{{date.date}}</div>
+      </div>
+      <div class="floatRight">
+        <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
+        <div class="fontWeight600 floatLeft">{{getDateExpensesSum(date)}}</div>
+      </div>
+      <div style="clear: both"></div>
+      <div *ngFor='let expense of date.expenses '>
+        <hr>
+        <div class="floatLeft">
+          <div class='littleDesc floatLeft'>Desc:&nbsp;</div>
+          <div class='floatLeft'>{{expense.description}}</div>
+        </div>
+        <div class="floatRight">
+          <div class='littleDesc floatLeft'>Value:&nbsp;</div>
+          <div class='floatLeft'>{{expense.value}}</div>
+        </div>
+        <div style="clear: both"></div>
+      </div>
+    </div>
+  </div>
+</div>

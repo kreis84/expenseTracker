@@ -79,8 +79,8 @@ export class HistoryComponent implements OnInit {
 
   public onShowHistoryClick(): void {
     this.showHistory = false;
-    const filteredExpenses = this.filterExpensesBySearchCriteria();
-    this.prepareDataForChart(filteredExpenses);
+    this.selectedExpenses = this.filterExpensesBySearchCriteria();
+    this.prepareDataForChart(this.selectedExpenses);
     setTimeout(() => {
       this.showHistory = true;
     }, 0);
