@@ -26,12 +26,13 @@ export class HistoryListComponent implements OnInit {
     this.renderObject.forEach((render) => {
       let dates = this.expenses.filter(expense => expense.categoryId === render.catId)
         .map(expens => expens.date)
-        .map(date => moment(date).format('DD.MM.YYYY'));
+        .map(date => moment(date, 'DD.MM.YYYY').format('DD.MM.YYYY'));
       dates = Array.from(new Set(dates));
       dates = dates.sort((a,b) => moment(a).isBefore(moment(b)) ? -1 : 0);
       render.dates = dates.map(date => ({date: date}));
       render.dates
-        .forEach(date => date.expenses = this.expenses.filter(expens => moment(expens.date).isSame(moment(date), 'days') && expens.categoryId === render.catId));
+        .forEach(date => date.expenses = this.expenses
+          .filter(expens => moment(expens.date, 'DD.MM.YYYY').isSame(moment(date), 'days') && expens.categoryId === render.catId));
     });
     this.renderObject = this.renderObject.filter(cat => cat.dates.length > 0);
     console.log(this.renderObject);
@@ -55,9 +56,6 @@ export class HistoryListComponent implements OnInit {
 
   public getCategorySum(catDates): number{
     let temp = catDates.map(date => date.expenses).flat().map(ex => ex.value).reduce((acc, i) => acc + i, 0);
-    console.log(temp);
-    // temp = temp.flat();
-    console.log(temp);
     return temp;
   }
 }

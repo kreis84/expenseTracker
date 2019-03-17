@@ -10,6 +10,17 @@
     position: relative;
     top: 3px;
 }
+#date{
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    color: #495057;
+    line-height: 1.5;
+    padding: 0.375rem 0.75rem;
+}
+#dateButton{
+    height: 38px;
+    width: 38px;
+}
 
 .modal{
     align-items: center;

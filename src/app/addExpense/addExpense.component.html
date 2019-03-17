@@ -20,8 +20,16 @@
       </button>
       <label class="down5px margin-left-10">Description<input type="text" class='form-control' formControlName="description"></label>
       <label class="down5px margin-left-10">Value<input type="number" class='form-control' formControlName="value"></label>
-      <button class="btn btn-primary margin-left-10" type="button" (click)='onAddNewExpense()'
+      <label class="down5px margin-left-10">
+        <div>Date</div>
+        <input id='date' type="text" formControlName='date' ngbDatepicker #EndDat="ngbDatepicker"
+          onkeydown="return false" />
+        <button class="btn btn-primary btn-sm" id='dateButton' style="top: -2px; position: relative;" (click)="EndDat.toggle()"><i
+            class="far fa-calendar-alt"></i></button>
+      </label>
+    <button class="btn btn-primary margin-left-10" type="button" (click)='onAddNewExpense()'
         [attr.disabled]='this.formGroup.valid ? null : false'>Save new expense</button>
+
       <div *ngIf='showNewCateSection' class='modal'>
         <div class='modalContent'>
           <label>Category name<input type="text" class='form-control' formControlName='newCategoryformControl'></label>

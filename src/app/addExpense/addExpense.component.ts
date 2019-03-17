@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ServicesService } from '../services.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../loader.service';
@@ -6,14 +6,14 @@ import { LogingService } from '../loging.service';
 import { startWith } from 'rxjs/operators';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'add-expense',
   templateUrl: './addExpense.component.html',
   styleUrls: ['./addExpense.component.scss']
 })
-export class AddExpenseComponent {
+export class AddExpenseComponent implements OnInit{
   categories: any[];
   showNewCateSection = false;
   newCategoryName;
@@ -22,10 +22,11 @@ export class AddExpenseComponent {
   selectedCategory = 'Select category';
   saveDisabled = true;
 
-  formGroup = new FormGroup ({
+  formGroup = new FormGroup({
     selectedCategory: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     value: new FormControl('', [Validators.required]),
+    date: new FormControl(new Date(), [Validators.required]),
     newCategoryformControl: new FormControl('')
   })
 
@@ -42,6 +43,11 @@ export class AddExpenseComponent {
       this.categories = categories;
       this.spinner.turnOff();
     });
+    const actDate = { day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() };
+    this.formGroup.get('date').patchValue(actDate);
+  }
+
+  ngOnInit():void{
   }
 
   public onCategorySelect(category: any): void {
@@ -51,7 +57,7 @@ export class AddExpenseComponent {
 
   public onAddNewCategory(): void {
     const userId = this.loging.user._id;
-    const newCategory = {name: this.formGroup.get('newCategoryformControl').value, userId: userId};
+    const newCategory = { name: this.formGroup.get('newCategoryformControl').value, userId: userId };
     this.spinner.turnOn();
     this.services.addNewCategory(newCategory).subscribe((response) => {
       this.spinner.turnOff();
@@ -61,13 +67,14 @@ export class AddExpenseComponent {
     });
   }
 
-  public onAddNewExpense(): void{
+  public onAddNewExpense(): void {
     const newExpense = this.formGroup.getRawValue();
     const category = this.categories.find((cat) => cat.name === newExpense.selectedCategory);
     newExpense.userId = this.loging.user._id;
     newExpense.categoryId = category._id;
     newExpense.desc = newExpense.description;
-    newExpense.date = new Date();
+    newExpense.date.month--;
+    newExpense.date = moment(newExpense.date).format('DD.MM.YYYY');
     this.spinner.turnOn();
     this.services.addNewExpense(newExpense).subscribe(() => {
       this.spinner.turnOff();

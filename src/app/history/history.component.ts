@@ -65,7 +65,7 @@ export class HistoryComponent implements OnInit {
       const dataForDates = this.barChartLabels.map((dateAsString) => {
         const currentDate = moment(dateAsString, 'DD.MM.YYYY');
         let expensesForCurrentDate = expensesForCategory.filter((expense) => {
-          return moment(expense.date).isSame(currentDate, 'days');
+          return moment(expense.date, 'DD.MM.YYYY').isSame(currentDate, 'days');
         });
         expensesForCurrentDate = expensesForCurrentDate.reduce((acc, item) => acc + item.value ,0);
         return expensesForCurrentDate;
@@ -93,14 +93,12 @@ export class HistoryComponent implements OnInit {
     let filteredExpenses = this.expenses.filter((expense) =>categoriesIds.includes(expense.categoryId));
     if(this.formGroup.get('startDate').value !== ''){
       const earliestDate = this.makeMomentDate(this.formGroup.get('startDate').value);
-      filteredExpenses = filteredExpenses.filter((expens) => moment(expens.date).isSameOrAfter(earliestDate));
+      filteredExpenses = filteredExpenses.filter((expens) => moment(expens.date, 'DD.MM.YYYY').isSameOrAfter(earliestDate));
     }
     if(this.formGroup.get('endDate').value !== ''){
       const latestDate = this.makeMomentDate(this.formGroup.get('endDate').value);
       latestDate.hour(24);
-      filteredExpenses = filteredExpenses.filter((expens) => {
-        return moment(expens.date).isSameOrBefore(latestDate);
-      });
+      filteredExpenses = filteredExpenses.filter((expens) => moment(expens.date, 'DD.MM.YYYY').isSameOrBefore(latestDate));
     }
     return filteredExpenses;
   }
