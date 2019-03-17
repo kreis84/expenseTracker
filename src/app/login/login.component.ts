@@ -3,6 +3,7 @@ import { ServicesService } from '../services.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../loader.service';
 import { LogingService } from '../loging.service';
+// import { userInfo } from 'os';
 
 @Component({
   selector: 'app-login',
@@ -28,10 +29,9 @@ export class LoginComponent implements OnInit {
 
   public onLoginClick(): void {
     this.spinner.turnOn();
-    this.services.getAllUsers().subscribe((users) => {
-      const user = users.find((user) => user.login === this.login && user.password === this.password);
+    this.services.getUserByLogin(this.login).subscribe((user) => {
       this.spinner.turnOff();
-      if(!user){
+      if(user.length !== 1 || user[0].password !== this.password){
         alert('Wrong login or password!');
       } else {
         this.loging.logUser();
@@ -42,11 +42,11 @@ export class LoginComponent implements OnInit {
   }
 
   public chartHovered(event): void{
-    console.log(event);
+    //
   }
 
   public chartClicked(event): void{
-    console.log(event);
+    //
   }
 
 }

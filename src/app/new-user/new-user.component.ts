@@ -28,14 +28,8 @@ export class NewUserComponent {
   public onRegisterClick(): void {
     this.spinner.turnOn();
     const newUser = this.formGroup.getRawValue();
-    // const newUser = {
-    //   name: this.formGroup.get('name').value,
-    //   password: this.formGroup.get('password').value,
-    //   login: this.login
-    // }
-    this.services.getAllUsers().subscribe((users: any[]) => {
-      const findedUser = users.find((user) => user.login === this.login);
-      if (findedUser) {
+    this.services.getUserByLogin(newUser.login).subscribe((user) => {
+      if (user.length > 0) {
         this.spinner.turnOff();
         alert('User with same login already exist');
       } else {

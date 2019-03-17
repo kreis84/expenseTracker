@@ -38,6 +38,10 @@ export class ServicesService {
 
   }
 
+  public getUserByLogin(login: string): any {
+    return this.http.get(`https://expensestracker-fcc2.restdb.io/rest/userss?q={"login":"${login}"}`, this.httpOptions);
+  }
+
   public getAllUsers(): any {
     return this.http.get(`https://expensestracker-fcc2.restdb.io/rest/userss`, this.httpOptions);
   }
