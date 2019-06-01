@@ -54,8 +54,17 @@ export class HistoryComponent implements OnInit {
   }
   
   public prepareDataForChart(expenses: any[]): void{
-    const startDate = this.makeMomentDate(this.formGroup.get('startDate').value);
-    const endDate = this.makeMomentDate(this.formGroup.get('endDate').value);
+    let startDate;
+    let endDate;
+    if(this.formGroup.get('startDate').value !== '' && this.formGroup.get('endDate').value !=='')
+    {
+      startDate = this.makeMomentDate(this.formGroup.get('startDate').value);
+      endDate = this.makeMomentDate(this.formGroup.get('endDate').value);
+    } else {
+      const startEnd = this.findStartEndDate(expenses);
+      startDate = startEnd.start;
+      endDate = startEnd.end;
+    }
     const selectedCategoriesObject = this.selectedCategories
       .map(catName => this.categories.find((cat) => cat.name === catName));
     const days = endDate.diff(startDate, 'days') + 1;
@@ -75,6 +84,11 @@ export class HistoryComponent implements OnInit {
         label: category.name
       }
     });
+  }
+
+  public findStartEndDate(expenses: any[]): {start: any, end: any}{
+    const momentDates: any[] = expenses.map((expens) => moment(expens.date, 'DD.MM.YYYY'));
+    return {start: moment.min(momentDates), end: moment.max(momentDates)}
   }
 
   public onShowHistoryClick(): void {
@@ -131,5 +145,9 @@ export class HistoryComponent implements OnInit {
 
   public onChartTypeSelect(type): void {
     this.selectedChartType = type;
+  }
+
+  public isShowDisabled(): boolean{
+    return this.selectedCategories.length < 1;
   }
 }
