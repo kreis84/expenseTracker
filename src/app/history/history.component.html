@@ -8,29 +8,44 @@
               <h6>Categories</h6>
               <div class="form-check" *ngFor='let category of categories'>
                 <label class='checkboxLabel'>
-                  <input class="form-check-input" type="checkbox" (change)='chanegeCategory($event)'
-                    [id]="category.name">
+                  <input class="form-check-input" type="checkbox" [checked]='checkIfChecked(category.name)'
+                    (change)='chanegeCategory($event)' [id]="category.name">
                   {{category.name}}
                 </label>
+              </div>
+              <div class=container id='catButtons'>
+                <div class="row">
+                  <button class="btn btn-primary btn-sm col-sm" id='allCatButton'
+                    (click)='onSelectAllCatergoriesClick()'>All</button>
+                  <button class="btn btn-primary btn-sm col-sm" id='allCatButton'
+                    (click)='onDeselectAllCatergoriesClick()'>None</button>
+                </div>
               </div>
             </label>
           </div>
         </div>
-        <label>
-          <div>Start date</div>
-          <input type="text" style="width: 100px" formControlName='startDate' ngbDatepicker #startDat="ngbDatepicker"
-            onkeydown="return false" />
-          <button class="btn btn-primary btn-sm" style="top: -2px; position: relative;" (click)="startDat.toggle()"><i
-              class="far fa-calendar-alt"></i></button>
-        </label>
-        <label>
-          <div>End date</div>
-          <input type="text" style="width: 100px" formControlName='endDate' ngbDatepicker #EndDat="ngbDatepicker"
-            onkeydown="return false" />
-          <button class="btn btn-primary btn-sm" style="top: -2px; position: relative;" (click)="EndDat.toggle()"><i
-              class="far fa-calendar-alt"></i></button>
-        </label>
-        <button class="btn btn-primary" style='width: 130px' (click)='onShowHistoryClick()' [disabled]="isShowDisabled()">Show history</button>
+        <div class="card cardDates">
+          <div class="card-body">
+            <div id='dateSection'>
+              <label>
+                <div>Start date</div>
+                <input type="text" readonly formControlName='startDate' ngbDatepicker
+                  #startDat="ngbDatepicker" onkeydown="return false" />
+                <button class="btn btn-primary btn-sm" id='buttonStartDate' style="top: -2px; position: relative;"
+                  (click)="startDat.toggle()"><i class="far fa-calendar-alt"></i></button>
+              </label>
+              <label>
+                <div>End date</div>
+                <input type="text" readonly formControlName='endDate' ngbDatepicker
+                  #EndDat="ngbDatepicker" onkeydown="return false" />
+                <button class="btn btn-primary btn-sm" id='buttonEndDate' style="top: -2px; position: relative;"
+                  (click)="EndDat.toggle()"><i class="far fa-calendar-alt"></i></button>
+              </label>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style='width: 150px' (click)='onShowHistoryClick()'
+          [disabled]="isShowDisabled()">Show history</button>
       </form>
 
       <div id='historyList' *ngIf='showHistory' class='col-md-3 col-sm-4'>

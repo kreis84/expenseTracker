@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ServicesService } from '../services.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../loader.service';
@@ -7,11 +7,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, combineLatest } from 'rxjs';
 import * as moment from 'moment';
 import { BaseChartDirective } from 'ng2-charts';
+
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
+
 export class HistoryComponent implements OnInit {
   formGroup = new FormGroup({
     startDate: new FormControl(''),
@@ -39,7 +41,8 @@ export class HistoryComponent implements OnInit {
   constructor(private services: ServicesService,
               private router: Router,
               private loging: LogingService,
-              private spinner: LoaderService) {
+              private spinner: LoaderService,
+              private chandeDetector: ChangeDetectorRef) {
     this.spinner.turnOn();
     const user = this.loging.user;
     combineLatest(this.services.getCategoriesByUser(user._id), this.services.getExpensByUserId(user._id))
@@ -129,6 +132,7 @@ export class HistoryComponent implements OnInit {
     } else {
       this.selectedCategories = this.selectedCategories.filter((it) => it !== id);
     }
+    console.log(this.selectedCategories);
   }
 
   public getDatesListAsString(start, end) {
@@ -149,5 +153,17 @@ export class HistoryComponent implements OnInit {
 
   public isShowDisabled(): boolean{
     return this.selectedCategories.length < 1;
+  }
+
+  public onSelectAllCatergoriesClick(): void{
+    this.selectedCategories = [...this.categories.map( cat => cat.name)];
+  }
+
+  public onDeselectAllCatergoriesClick(): void {
+    this.selectedCategories = [];
+  }
+
+  public checkIfChecked(catName): boolean{
+    return this.selectedCategories.some((name) => name === catName);
   }
 }
