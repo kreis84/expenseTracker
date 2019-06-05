@@ -1,52 +1,75 @@
-.cardCategories{
-    width: 150px;
-    word-break: break-all;
-    overflow: hidden;
+#historyMain{
+    width: 1100px;
+    margin: auto;
 
-    .card-body{
-        padding: 10px;
-
-        & > label {
-            width: 100%;
-            margin-bottom: 0;
-        }
-
-        .checkboxLabel{
-            margin-bottom: 0px;
-            cursor: pointer;
-        }
-
-        #catButtons button{
-            margin: 1px;
-        }
-    }
-}
-
-.cardDates{
-    width: 150px;
-
-    .card-body{
-        padding: 10px;
-
-        input{
-            width: 97px;
-        }
-    }
-}
-
-#charts{
-    label{
-        float:left;
-        top: 7px;
-        position: relative;
-    }
-    .dropdown{
+    #historyForm{
+        width: 150px;
         float: left;
+        #cardCategories{
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            padding: 10px;
+            #catButtons{
+                margin-top: 10px;    
+                button{
+                    width: 60px;
+                    margin-right: 2px;
+                }
+            }
+        }
+        #cardDates{
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            padding: 10px;
+            input{
+                width: 97px;
+            }
+        }
+        .form-check{
+            line-height: 15px;
+        }
+    }
+
+    #historyList{
+        float: left;
+        max-width: 150px;
+    }
+
+    #charts{
+        overflow: hidden;
+        min-width: 500px;
     }
 }
 
-#dateSection{
-    input{
-        padding: 0 5px 0 5px;
+.expandedAnim{
+    // animation: expand 1s linear;
+    animation: expand 5s linear 2s infinite alternate;
+}
+
+@keyframes expand{
+    from{
+        max-width: 50px;
+    }
+
+    to{
+        max-width: 150px;
     }
 }
+
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    #historyMain{
+        width: 930px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    #historyMain{
+        width: 690px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #historyMain{
+        width: 540px;
+    }
+}
+

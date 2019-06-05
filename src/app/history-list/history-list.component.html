@@ -1,37 +1,73 @@
-<div *ngFor='let category of renderObject'>
-  <span data-toggle="collapse" [attr.data-target]="'#hist' + category.catName" aria-expanded="false"
-    aria-controls="collapseExample">
-    <div class="hed">
-      <h6 class='floatLeft'>{{category.catName}}</h6>
-      <div class='floatRight paddingRight10px test'>
-        <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
-        <div class="floatLeft fontWeight600"> {{getCategorySum(category.dates)}}</div>
-      </div>
-      <div style="clear: both"></div>
-    </div>
+<div id='verticalTitle' *ngIf='collapsed' (click)='collapsed = !collapsed'>
+  <span  class='icon'>
+    <i class="fas fa-arrow-circle-up" style="color: #007bff"></i>
   </span>
-  <div class="collapse" [id]="'hist'+category.catName">
-    <div class="detailedItem" *ngFor='let date of category.dates'>
-      <div class="floatLeft">
-        <div class='littleDesc floatLeft fontWeight800'>Date: &nbsp;</div>
-        <div class="fontWeight600 floatLeft">{{date.date}}</div>
-      </div>
-      <div class="floatRight">
-        <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
-        <div class="fontWeight600 floatLeft">{{getDateExpensesSum(date)}}</div>
-      </div>
-      <div style="clear: both"></div>
-      <div *ngFor='let expense of date.expenses '>
-        <hr>
-        <div class="floatLeft">
-          <div class='littleDesc floatLeft'>Desc:&nbsp;</div>
-          <div class='floatLeft'>{{expense.description}}</div>
-        </div>
-        <div class="floatRight">
-          <div class='littleDesc floatLeft'>Value:&nbsp;</div>
-          <div class='floatLeft'>{{expense.value}}</div>
+  <span>E</span>
+  <span>X</span>
+  <span>P</span>
+  <span>E</span>
+  <span>N</span>
+  <span>S</span>
+  <span>E</span>
+  <span>S</span>
+  <span>&nbsp;</span>
+  <span>H</span>
+  <span>I</span>
+  <span>S</span>
+  <span>T</span>
+  <span>O</span>
+  <span>R</span>
+  <span>Y</span>
+  <span>&nbsp;</span>
+  <span>L</span>
+  <span>I</span>
+  <span>S</span>
+  <span>T</span>
+  <span class='icon'>
+      <i class="fas fa-arrow-circle-up" style="color: #007bff"></i>
+    </span>
+  </div>
+<div id='expanded' *ngIf='!collapsed' [ngClass]="{'expandedAnim': !collapsed}">
+  <div (click)='collapsed = !collapsed' id='hide'>
+    <i class="fas fa-arrow-circle-left" style="color: #007bff"></i>
+    HIDE
+    <i class="fas fa-arrow-circle-left" style="color: #007bff"></i>
+  </div>
+  <div *ngFor='let category of renderObject'>
+    <span data-toggle="collapse" [attr.data-target]="'#hist' + category.catName" aria-expanded="false"
+      aria-controls="collapseExample">
+      <div class="hed">
+        <h6 class='floatLeft'>{{category.catName}}</h6>
+        <div class='floatRight paddingRight10px test'>
+          <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
+          <div class="floatLeft fontWeight600"> {{getCategorySum(category.dates)}}</div>
         </div>
         <div style="clear: both"></div>
+      </div>
+    </span>
+    <div class="collapse" [id]="'hist'+category.catName">
+      <div class="detailedItem" *ngFor='let date of category.dates'>
+        <div class="floatLeft">
+          <div class='littleDesc floatLeft fontWeight800'>Date: &nbsp;</div>
+          <div class="fontWeight600 floatLeft">{{date.date}}</div>
+        </div>
+        <div class="floatRight">
+          <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
+          <div class="fontWeight600 floatLeft">{{getDateExpensesSum(date)}}</div>
+        </div>
+        <div style="clear: both"></div>
+        <div *ngFor='let expense of date.expenses '>
+          <hr>
+          <div class="floatLeft">
+            <div class='littleDesc floatLeft'>Desc:&nbsp;</div>
+            <div class='floatLeft'>{{expense.description}}</div>
+          </div>
+          <div class="floatRight">
+            <div class='littleDesc floatLeft'>Value:&nbsp;</div>
+            <div class='floatLeft'>{{expense.value}}</div>
+          </div>
+          <div style="clear: both"></div>
+        </div>
       </div>
     </div>
   </div>

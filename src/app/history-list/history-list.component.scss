@@ -1,5 +1,27 @@
+#expanded{
+    width: 150px;
+    i:first-child{
+        position: relative;
+        left: -30px;
+    }
+    i:last-child{
+        position: relative;
+        left: 30px;
+    }
+    #hide{
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+    }
+}
+
+
+
 .hed{
-    border: 1px solid #dcdcdc;
+    border-top: 1px solid #dcdcdc;
+    border-left: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
     padding-top: 5px;
     margin: auto;
     text-align: -webkit-center;
@@ -46,7 +68,33 @@ hr{
     position: relative;
 }
 
-.test{
-    position: absolute;
-    left: 150px
+// .test{
+//     position: absolute;
+//     left: 150px
+// }
+
+
+#verticalTitle{
+    margin: 0 2px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    font-weight: 700;
+    cursor: pointer;
+    span{
+        display: block;
+        transform: rotate(90deg);
+        height: 11px;
+        text-align: center;
+        left: 6px;
+        position: relative;
+        i{
+            color: #007bff;
+        }
+    }
+    span:first-child{
+        top: -4px;
+    }
+    span:last-child{
+        top: 4px;
+    }
 }

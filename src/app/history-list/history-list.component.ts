@@ -12,6 +12,7 @@ export class HistoryListComponent implements OnInit {
   @Input() expenses: any[];
   items: any;
   renderObject: any[];
+  collapsed: boolean = true;
 
   constructor() { }
 
