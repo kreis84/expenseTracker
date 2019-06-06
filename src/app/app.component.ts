@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
       this.showLoader = value;
     });
     this.router.navigate(['login']);
+    console.log(this.loging);
   }
 
   public onLogOut(): void {

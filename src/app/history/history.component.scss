@@ -36,6 +36,11 @@
     #charts{
         overflow: hidden;
         min-width: 500px;
+        .chartLabel{
+            float: left;
+            position: relative;
+            top: 7px;
+        }
     }
 }
 

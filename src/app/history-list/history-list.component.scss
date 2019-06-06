@@ -18,22 +18,7 @@
 
 
 
-.hed{
-    border-top: 1px solid #dcdcdc;
-    border-left: 1px solid #dcdcdc;
-    border-right: 1px solid #dcdcdc;
-    padding-top: 5px;
-    margin: auto;
-    text-align: -webkit-center;
-    cursor: pointer;
-    border-radius: 0.25rem;
-    margin-top: 5px;
-    margin-bottom: 1px;
-    
-    h6{
-        padding-left: 10px;
-    }
-}
+
 .paddingRight10px{
     padding-right: 10px;
 }
@@ -55,23 +40,57 @@
 hr{
     margin: 0;
 }
-.detailedItem{
-    font-size: 13px;
-    border: 1px solid #dcdcdc;
-    border-radius: 0.25rem;
-    padding: 0 10px;
-    margin-bottom: 1px;
-}
-.littleDesc{
-    font-size: 10px;
-    top: 5px;
-    position: relative;
-}
-
-// .test{
-//     position: absolute;
-//     left: 150px
+// .detailedItem{
+//     font-size: 13px;
+//     margin-bottom: 1px;
 // }
+
+#categoryBox{
+    border-radius: 10px;
+    .hed{
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        margin-top: 2px;
+        border-radius: 3px;
+        h6{
+            padding-left: 10px;
+            position: relative;
+            top: 3px;
+        }
+    }
+    .detailedItem{
+        font-size: 13px;
+        margin-bottom: 1px;
+    }
+    .collapse{
+        .secondSum{
+            float: right;
+        }
+        .datailMain{
+            width: 100%;
+            padding: 0 5px;
+        }
+        .date{
+            font-size: 12px;
+            padding: 0 5px;
+        }
+    }
+    .detailSmall{
+        padding: 0 5px;
+        &:nth-child(odd){
+            background-color: #e2e2e2;
+        }
+    }
+    .littleDesc{
+        font-size: 10px;
+        top: 3px;
+        position: relative;
+    }
+    .dayHeader{
+        background-color: #cccccc;
+    }
+}
 
 
 #verticalTitle{

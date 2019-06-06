@@ -1,5 +1,5 @@
 <div id='verticalTitle' *ngIf='collapsed' (click)='collapsed = !collapsed'>
-  <span  class='icon'>
+  <span class='icon'>
     <i class="fas fa-arrow-circle-up" style="color: #007bff"></i>
   </span>
   <span>E</span>
@@ -24,16 +24,17 @@
   <span>S</span>
   <span>T</span>
   <span class='icon'>
-      <i class="fas fa-arrow-circle-up" style="color: #007bff"></i>
-    </span>
-  </div>
+    <i class="fas fa-arrow-circle-up" style="color: #007bff"></i>
+  </span>
+</div>
 <div id='expanded' *ngIf='!collapsed' [ngClass]="{'expandedAnim': !collapsed}">
   <div (click)='collapsed = !collapsed' id='hide'>
     <i class="fas fa-arrow-circle-left" style="color: #007bff"></i>
     HIDE
     <i class="fas fa-arrow-circle-left" style="color: #007bff"></i>
   </div>
-  <div *ngFor='let category of renderObject'>
+
+  <div *ngFor='let category of renderObject' id='categoryBox'>
     <span data-toggle="collapse" [attr.data-target]="'#hist' + category.catName" aria-expanded="false"
       aria-controls="collapseExample">
       <div class="hed">
@@ -47,17 +48,20 @@
     </span>
     <div class="collapse" [id]="'hist'+category.catName">
       <div class="detailedItem" *ngFor='let date of category.dates'>
-        <div class="floatLeft">
+        <hr>
+        <div class="floatLeft datailMain">
           <div class='littleDesc floatLeft fontWeight800'>Date: &nbsp;</div>
-          <div class="fontWeight600 floatLeft">{{date.date}}</div>
+          <div class='secondSum'>
+            <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
+            <div class="fontWeight600 floatLeft">{{getDateExpensesSum(date)}}</div>
+          </div>
         </div>
-        <div class="floatRight">
-          <div class='littleDesc floatLeft fontWeight800'>Sum: &nbsp;</div>
-          <div class="fontWeight600 floatLeft">{{getDateExpensesSum(date)}}</div>
+        <div class="dayHeader">
+          <div class="date">{{date.date}}</div>
         </div>
         <div style="clear: both"></div>
-        <div *ngFor='let expense of date.expenses '>
-          <hr>
+        <hr>
+        <div *ngFor='let expense of date.expenses' class="detailSmall">
           <div class="floatLeft">
             <div class='littleDesc floatLeft'>Desc:&nbsp;</div>
             <div class='floatLeft'>{{expense.description}}</div>
@@ -68,7 +72,9 @@
           </div>
           <div style="clear: both"></div>
         </div>
+        <hr>
       </div>
     </div>
   </div>
+
 </div>

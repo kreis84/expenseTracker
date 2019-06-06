@@ -25,8 +25,8 @@ export class HistoryComponent implements OnInit {
   selectedExpenses: any[];
 
   showHistory: boolean = false;
-  chartsTypes = ['bar','line','doughnut'];
-  selectedChartType = 'bar';
+  chartsTypes = ['line','bar','doughnut'];
+  selectedChartType = 'line';
   barChartLegend: boolean = true;
   barChartOptions: any = {
     scaleShowVerticalLines: false,
