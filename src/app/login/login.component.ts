@@ -22,9 +22,9 @@ export class LoginComponent implements OnInit {
               private spinner: LoaderService) { }
 
   ngOnInit() {
-    this.name = 'testQuest';
-    this.login = 'maro';
-    this.password = 'maro92';
+    this.name = 'Guest';
+    this.login = 'guest';
+    this.password = 'guest123';
   }
 
   public onLoginClick(): void {
