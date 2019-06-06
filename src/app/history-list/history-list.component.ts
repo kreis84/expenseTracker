@@ -36,7 +36,6 @@ export class HistoryListComponent implements OnInit {
           .filter(expens => moment(expens.date, 'DD.MM.YYYY').isSame(moment(date), 'days') && expens.categoryId === render.catId));
     });
     this.renderObject = this.renderObject.filter(cat => cat.dates.length > 0);
-    console.log(this.renderObject);
   }
 
   public getDate(expense): string {

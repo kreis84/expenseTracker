@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         alert('Wrong login or password!');
       } else {
         this.loging.logUser();
-        this.loging.user = user;
+        this.loging.user = user[0];
         this.router.navigate(['showHistory']);
       }
     })

@@ -132,7 +132,6 @@ export class HistoryComponent implements OnInit {
     } else {
       this.selectedCategories = this.selectedCategories.filter((it) => it !== id);
     }
-    console.log(this.selectedCategories);
   }
 
   public getDatesListAsString(start, end) {
