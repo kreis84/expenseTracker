@@ -21,6 +21,8 @@ export class AddExpenseComponent implements OnInit{
   value;
   selectedCategory = 'Select category';
   saveDisabled = true;
+  showMessage = false;
+  messageContent = '';
 
   formGroup = new FormGroup({
     selectedCategory: new FormControl('', [Validators.required]),
@@ -62,8 +64,13 @@ export class AddExpenseComponent implements OnInit{
     this.services.addNewCategory(newCategory).subscribe((response) => {
       this.spinner.turnOff();
       this.categories.push(response);
-      alert('New category successfuly added.');
+      this.messageContent = 'New category successfuly added.';
+      this.showMessage = true;
       this.showNewCateSection = false;
+    }, (error)=>{
+      this.spinner.turnOff();
+      this.messageContent = JSON.stringify(error.statusText);
+      this.showMessage = true;
     });
   }
 
@@ -78,9 +85,14 @@ export class AddExpenseComponent implements OnInit{
     this.spinner.turnOn();
     this.services.addNewExpense(newExpense).subscribe(() => {
       this.spinner.turnOff();
-      alert('New expense successfuly added.');
       this.formGroup.reset();
       this.selectedCategory = 'Select category';
+      this.messageContent = 'New expense successfuly added.';
+      this.showMessage = true;
+    }, (error)=>{
+      this.spinner.turnOff();
+      this.messageContent = JSON.stringify(error.statusText);
+      this.showMessage = true;
     });
   }
 }

@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   name;
   login;
   password;
+  showMessage = false;
+  messageContent = '';
   @ViewChild('warrning') warrning: any;
 
   constructor(private services: ServicesService,
@@ -32,21 +34,30 @@ export class LoginComponent implements OnInit {
     this.services.getUserByLogin(this.login).subscribe((user) => {
       this.spinner.turnOff();
       if(user.length !== 1 || user[0].password !== this.password){
-        alert('Wrong login or password!');
+        this.messageContent = 'Wrong login or password!';
+        this.showMessage = true;
       } else {
         this.loging.logUser();
         this.loging.user = user[0];
         this.router.navigate(['showHistory']);
       }
+    }, (error) => {
+        this.spinner.turnOff();
+        this.messageContent = JSON.stringify(error.statusText);
+        this.showMessage = true;
     })
   }
 
-  public chartHovered(event): void{
-    //
-  }
+  // public onOkClickEvent(): void {
+  //   this.showMessage = false;
+  // }
 
-  public chartClicked(event): void{
-    //
-  }
+  // public chartHovered(event): void{
+  //   //
+  // }
+
+  // public chartClicked(event): void{
+  //   //
+  // }
 
 }

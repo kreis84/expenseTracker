@@ -1,0 +1,29 @@
+#background{
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    z-index: 1200;
+    #messageBox{
+        transform: translateY(-50%);
+        background-color:#676767;
+        width: 200px;
+        margin: auto;
+        top: 50%;
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 5px;
+        text-align: center;
+        padding: 10px;
+        #content{
+            color: white;
+            margin-bottom: 10px;
+
+        }
+        button{
+
+        }
+    }
+}

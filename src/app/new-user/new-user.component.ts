@@ -13,6 +13,8 @@ export class NewUserComponent {
   name;
   password;
   login;
+  showMessage = false;
+  messageContent = '';
 
   formGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -22,8 +24,8 @@ export class NewUserComponent {
 
 
   constructor(private services: ServicesService,
-              private spinner: LoaderService, 
-              private router: Router) { }
+    private spinner: LoaderService,
+    private router: Router) { }
 
   public onRegisterClick(): void {
     this.spinner.turnOn();
@@ -31,14 +33,26 @@ export class NewUserComponent {
     this.services.getUserByLogin(newUser.login).subscribe((user) => {
       if (user.length > 0) {
         this.spinner.turnOff();
-        alert('User with same login already exist');
+        this.messageContent = 'User with same login already exist';
+        this.showMessage = true;
       } else {
         this.services.addNewUser(newUser).subscribe((response) => {
-          alert('New user successfuly created.');
           this.spinner.turnOff();
-          this.router.navigate(['login']);
+          this.messageContent = 'New user successfuly created.';
+          this.showMessage = true;
         })
       }
+    }, (error) => {
+      this.spinner.turnOff();
+      this.messageContent = JSON.stringify(error.statusText);
+      this.showMessage = true;
     })
+  }
+
+  public onOkClickEvent(): void {
+    this.showMessage = false;
+    if (this.messageContent === 'New user successfuly created.') {
+      this.router.navigate(['login']);
+    }
   }
 }

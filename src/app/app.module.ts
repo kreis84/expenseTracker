@@ -16,6 +16,7 @@ import { HistoryComponent } from './history/history.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { HistoryListComponent } from './history-list/history-list.component';
+import { MessageComponent } from './message/message.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     NewUserComponent,
     AddExpenseComponent,
     HistoryComponent,
-    HistoryListComponent
+    HistoryListComponent,
+    MessageComponent
   ],
   imports: [
     NgbModule,
