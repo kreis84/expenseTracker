@@ -32,8 +32,7 @@ export class HistoryListComponent implements OnInit {
       dates = dates.sort((a,b) => moment(a).isBefore(moment(b)) ? -1 : 0);
       render.dates = dates.map(date => ({date: date}));
       render.dates
-        .forEach(date => date.expenses = this.expenses
-          .filter(expens => moment(expens.date, 'DD.MM.YYYY').isSame(moment(date), 'days') && expens.categoryId === render.catId));
+        .forEach(date => date.expenses = this.expenses.filter(expens => moment(expens.date, 'DD.MM.YYYY').isSame(moment(date.date, 'DD.MM.YYYY'), 'days') && expens.categoryId === render.catId));
     });
     this.renderObject = this.renderObject.filter(cat => cat.dates.length > 0);
   }
